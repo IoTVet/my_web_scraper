@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scraped Data Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .data-section {
+            margin-bottom: 20px;
+        }
+        .data-section h2 {
+            margin-bottom: 10px;
+        }
+        .data-item {
+            padding: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Scraped Data Viewer</h1>
+
+    <div class="data-section" id="headings-section">
+        <h2>Headings</h2>
+        <div id="headings"></div>
+    </div>
+
+    <div class="data-section" id="paragraphs-section">
+        <h2>Paragraphs</h2>
+        <div id="paragraphs"></div>
+    </div>
+
+    <div class="data-section" id="links-section">
+        <h2>Links</h2>
+        <div id="links"></div>
+    </div>
+
+    <script>
+        // Fetch and display headings
+        fetch('http://127.0.0.1:5000/api/headings')
+            .then(response => response.json())
+            .then(data => {
+                const headingsContainer = document.getElementById('headings');
+                data.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'data-item';
+                    div.textContent = item;
+                    headingsContainer.appendChild(div);
+                });
+            });
+
+        // Fetch and display paragraphs
+        fetch('http://127.0.0.1:5000/api/paragraphs')
+            .then(response => response.json())
+            .then(data => {
+                const paragraphsContainer = document.getElementById('paragraphs');
+                data.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'data-item';
+                    div.textContent = item;
+                    paragraphsContainer.appendChild(div);
+                });
+            });
+
+        // Fetch and display links
+        fetch('http://127.0.0.1:5000/api/links')
+            .then(response => response.json())
+            .then(data => {
+                const linksContainer = document.getElementById('links');
+                data.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'data-item';
+                    const a = document.createElement('a');
+                    a.href = item;
+                    a.textContent = item;
+                    a.target = '_blank';
+                    div.appendChild(a);
+                    linksContainer.appendChild(div);
+                });
+            });
+    </script>
+
+</body>
+</html>
